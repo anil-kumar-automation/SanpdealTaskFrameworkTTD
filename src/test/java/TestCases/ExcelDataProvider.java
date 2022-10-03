@@ -29,10 +29,9 @@ import java.util.Set;
 public class ExcelDataProvider {
     WebDriver driver;
 
-
-    @BeforeMethod
+    @BeforeMethod()
     @Parameters("browser")
-    //public void launchBrowserAndExecution() throws IOException {
+
     public void launchBrowserAndExecution(String browser) throws IOException {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/config/Item.properties");
@@ -53,18 +52,17 @@ public class ExcelDataProvider {
             driver = new FirefoxDriver();
         }
 
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(50));
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
         driver.manage().window().maximize();
         driver.manage().deleteAllCookies();
         driver.get(url);
         Reporter.log("successfully Launched the browser and Navigated Snapdeal", true);
     }
 
-    @DataProvider(name = "excel-data")
+    @DataProvider(name = "excel-data", parallel = true)
     public Object[][] excelDP() throws IOException {
         //We are creating an object from the excel sheet data by calling a method that reads data from the excel stored locally in our system
-        Object[][] arrObj = getExcelData("C:\\Users\\as61837\\Downloads\\exceldata\\ReaditemlData.xlsx");
-        //ReadItem/xlsx
+        Object[][] arrObj = getExcelData(System.getProperty("user.dir") + "/exceldata/bluetoothitem.xlsx");
         return arrObj;
     }
 
@@ -79,14 +77,12 @@ public class ExcelDataProvider {
             XSSFRow row = sh.getRow(0);
             int noOfRows = sh.getPhysicalNumberOfRows();
             int noOfCols = row.getLastCellNum();
-            System.out.println(noOfRows); //4
-            System.out.println(noOfCols); //1
+
             Cell cell;
             data = new String[noOfRows - 1][noOfCols];
 
             for (int i = 1; i < noOfRows; i++) {
                 for (int j = 0; j < noOfCols; j++) {
-                    System.out.println(i + " " + j);
                     row = sh.getRow(i);
                     cell = row.getCell(j);
                     data[i - 1][j] = cell.getStringCellValue();
@@ -99,12 +95,12 @@ public class ExcelDataProvider {
     }
 
     @Test(dataProvider = "excel-data")
-    public void SanpdealTestcases(String searchName) throws InterruptedException, IOException {
+    public void BluetoothItemWithEdgeBrowser(String searchName) throws IOException, InterruptedException {
         SearchItemData si = new SearchItemData(driver);
         si.enterItemInSearch().sendKeys(searchName);
         si.ClickSearchButton().click();
-        Reporter.log("successfully  search the item", true);
-      /*  VerifySearchResults vsr = new VerifySearchResults(driver);
+        Reporter.log("successfully  search the Bluetooth item", true);
+        VerifySearchResults vsr = new VerifySearchResults(driver);
         WebDriverWait w = new WebDriverWait(driver, Duration.ofSeconds(10));
         w.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='search-result-txt-section  marT12']/span[@style='color: #212121; font-weight: normal']")));
         String actualString = vsr.VerifysearchCriteria().getText();
@@ -113,8 +109,8 @@ public class ExcelDataProvider {
         Reporter.log("successfully verified search result", true);
         SortBy sb = new SortBy(driver);
         Thread.sleep(2000);
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='sorting-sec animBounce']/div[@class='sort-drop clearfix']")));
+        /*WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='sorting-sec animBounce']/div[@class='sort-drop clearfix']")));*/
         sb.ClickonSortby().click();
         Thread.sleep(2000);
         sb.clickpopularity().click();
@@ -158,16 +154,11 @@ public class ExcelDataProvider {
         String verifedremovecart = rcv.verifyremoveCart().getText();
         System.out.println(verifedremovecart);
         Assert.assertEquals(verifedremovecart, "Shopping Cart is empty!");
-        Reporter.log("successfully verified remove cart item", true);*/
-
+        Reporter.log("successfully verified remove cart item", true);
     }
 
     @AfterMethod
     public void teardown() {
         driver.quit();
     }
-
 }
-
-
-

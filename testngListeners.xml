@@ -5,8 +5,9 @@
         <listener class-name="Reports.ExtentReportNg"></listener>
     </listeners>
     <test  name="SanpdealTestCase">
+        <parameter name="browser" value="chrome" />
         <classes>
-            <class name="TestCases.ExcelDataProvider">
+            <class name="TestCases.TestCase">
             </class>
         </classes>
     </test>
