@@ -62,7 +62,7 @@ public class ExcelDataProvider {
     @DataProvider(name = "excel-data", parallel = true)
     public Object[][] excelDP() throws IOException {
         //We are creating an object from the excel sheet data by calling a method that reads data from the excel stored locally in our system
-        Object[][] arrObj = getExcelData(System.getProperty("user.dir") + "/exceldata/bluetoothitem.xlsx");
+        Object[][] arrObj = getExcelData(System.getProperty("user.dir") + "/ExcelFileData/bluetoothitem.xlsx");
         return arrObj;
     }
 
