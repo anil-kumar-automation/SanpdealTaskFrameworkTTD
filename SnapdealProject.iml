@@ -123,5 +123,6 @@
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver:3.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:bson:3.0.4" level="project" />
     <orderEntry type="library" name="Maven: org.mongodb:mongodb-driver-core:3.0.4" level="project" />
+    <orderEntry type="library" name="Maven: com.aventstack:extentreports:${extentreports-version}" level="project" />
   </component>
 </module>

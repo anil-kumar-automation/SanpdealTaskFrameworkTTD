@@ -7,7 +7,7 @@
     <test  name="SanpdealTestCase">
         <parameter name="browser" value="chrome" />
         <classes>
-            <class name="TestCases.TestCase">
+            <class name="TestCases.ExcelDataProvider">
             </class>
         </classes>
     </test>
