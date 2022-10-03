@@ -11,4 +11,11 @@
             </class>
         </classes>
     </test>
+    <test  name="SanpdealTestCase">
+        <parameter name="browser" value="chrome" />
+        <classes>
+            <class name="TestCases.TestCase">
+            </class>
+        </classes>
+    </test>
 </suite>
