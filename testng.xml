@@ -9,11 +9,11 @@
         </classes>
     </test>
 
-    <test name="EdgeTest">
+    <!-- <test name="EdgeTest">
         <parameter name="browser" value="Edge" />
         <classes>
             <class name="TestCases.TestCase">
             </class>
         </classes>
-    </test>
+    </test> -->
 </suite>
