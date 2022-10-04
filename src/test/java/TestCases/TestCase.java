@@ -58,15 +58,6 @@ public class TestCase {
         Reporter.log("successfully Launched the browser and Navigated Snapdeal", true);
     }
 
-    /*@Test(priority = 1)
-    public void SearchModule() throws InterruptedException, CsvValidationException, IOException {
-        CsvSearchItem si = new CsvSearchItem(driver);
-        si.enterItemInSearch();
-        Thread.sleep(2000);
-        si.ClickSearchButton().click();
-        Reporter.log("successfully  search the Bluetooth item", true);
-
-    }*/
 
     @Test(priority = 1)
     public void SearchModule() throws InterruptedException {
