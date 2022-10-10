@@ -10,16 +10,21 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxOptions;
 import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.ie.InternetExplorerOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.*;
 
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.Duration;
 import java.util.Iterator;
@@ -31,7 +36,6 @@ public class ExcelDataProvider {
 
     @BeforeMethod()
     @Parameters("browser")
-
     public void launchBrowserAndExecution(String browser) throws IOException {
         Properties prop = new Properties();
         FileInputStream fis = new FileInputStream(System.getProperty("user.dir") + "/src/main/java/config/Item.properties");
@@ -40,16 +44,22 @@ public class ExcelDataProvider {
 
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
-            driver = new ChromeDriver();
+            ChromeOptions options = new ChromeOptions();
+            options.setHeadless(true);
+            driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("InternetExplorer")) {
             WebDriverManager.iedriver().setup();
+            InternetExplorerOptions ieo = new InternetExplorerOptions();
             driver = new InternetExplorerDriver();
         } else if (browser.equalsIgnoreCase("edge")) {
             WebDriverManager.edgedriver().setup();
             driver = new EdgeDriver();
+
         } else if (browser.equalsIgnoreCase("firefox")) {
             WebDriverManager.firefoxdriver().setup();
-            driver = new FirefoxDriver();
+            FirefoxOptions fo = new FirefoxOptions();
+            fo.setHeadless(false);
+            driver = new FirefoxDriver(fo);
         }
 
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
@@ -95,7 +105,7 @@ public class ExcelDataProvider {
     }
 
     @Test(dataProvider = "excel-data")
-    public void BluetoothItemWithEdgeBrowser(String searchName) throws IOException, InterruptedException {
+    public void BluetoothItemWithBrowser(String searchName) throws IOException, InterruptedException {
         SearchItemData si = new SearchItemData(driver);
         si.enterItemInSearch().sendKeys(searchName);
         si.ClickSearchButton().click();
@@ -109,8 +119,6 @@ public class ExcelDataProvider {
         Reporter.log("successfully verified search result", true);
         SortBy sb = new SortBy(driver);
         Thread.sleep(2000);
-        /*WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//div[@class='sorting-sec animBounce']/div[@class='sort-drop clearfix']")));*/
         sb.ClickonSortby().click();
         Thread.sleep(2000);
         sb.clickpopularity().click();
