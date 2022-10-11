@@ -46,7 +46,7 @@ public class TestCase {
         if (browser.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
-            options.setHeadless(false);
+            options.setHeadless(true);
             driver = new ChromeDriver(options);
         } else if (browser.equalsIgnoreCase("InternetExplorer")) {
             WebDriverManager.iedriver().setup();
